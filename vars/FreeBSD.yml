@@ -1,0 +1,17 @@
+default_packages:
+- bash
+- curl
+- sudo
+- vim-console
+
+default_sysctls:
+- name: security.bsd.see_other_uids
+  value: 0
+- name: security.bsd.see_other_gids
+  value: 0
+- name: security.bsd.unprivileged_read_msgbuf
+  value: 0
+- name: security.bsd.unprivileged_proc_debug
+  value: 0
+- name: security.bsd.stack_guard_page
+  value: 1

@@ -1,0 +1,3 @@
+{% for module in redhat_disabled_modules %}
+install {{ module }} /bin/true
+{% endfor %}

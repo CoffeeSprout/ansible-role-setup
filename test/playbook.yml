@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  become: True
+  roles:
+  - role: coffeesprout.setup
+    #packages:
+    #- htop
+    

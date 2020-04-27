@@ -1,0 +1,68 @@
+---
+# tasks file for CentOS
+
+- name: setup hostname
+  hostname:
+    name: "{{ server_hostname }}"
+  register: hostname_changed
+  tags:
+  - networking
+  - hostname
+
+- name: make hostname change permanent with hostnamectl
+  command: hostnamectl set-hostname {{ server_hostname }} --static
+  when: 'hostname_changed is changed'
+  tags:
+  - networking
+
+- name: setup network device
+  include_tasks: network_device_RedHat.yml
+  with_items: "{{ network_devices }}"
+  loop_control:
+    loop_var: network_device
+  tags:
+  - networking
+
+- name: block network protocols and filesystems in modprobe
+  modprobe:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ redhat_disabled_modules }}"
+  tags:
+  - modules
+
+- name: setup /etc/modprobe.d/CIS.conf
+  template:
+    dest: /etc/modprobe.d/CIS.conf
+    src: cis.conf.modprobe
+  tags:
+  - modules
+
+- name: setup /etc/security/limits.d/cis.conf
+  template:
+    dest: /etc/security/limits.d/cis.conf
+    src: cis.conf.limits
+  tags:
+  - limits
+
+- name: setup psacct to monitor user activity
+  package:
+    name: psacct
+    state: installed
+  tags:
+  - monitoring
+  - psacct
+  register: psacct_installed
+
+- name: enable and start psacct
+  service:
+    name: psacct
+    state: started
+    enabled: True
+  tags:
+  - monitoring
+  - psacct
+
+- name: accton to collect user activity
+  command: accton on
+  when: psacct_installed is changed

@@ -1,0 +1,50 @@
+---
+
+- name: setup hostname
+  hostname:
+    name: "{{ server_hostname }}"
+  tags:
+  - networking
+
+- name: runtime setup network devices
+  command: "ifconfig {{ item.device }} inet {{ item.ip }} netmask {{ item.netmask | default('255.255.255.0') }} group {{ item.group | default('internal') }}"
+  loop: "{{ network_devices }}"
+  tags:
+  - networking
+
+- name: configure network devices
+  sysrc:
+    name: "ifconfig_{{ item.device }}"
+    value: "inet {{ item.ip }} netmask {{ item.netmask | default('255.255.255.0') }} group {{ item.group | default('internal') }}"
+  loop: "{{ network_devices }}"
+  tags:
+  - networking
+
+- name: setup changes to rc.conf
+  sysrc:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+  with_items:
+  - "{{ rc_changes }}"
+  tags:
+  - rc_conf
+
+- name: create pkg override folder
+  file:
+    path: /usr/local/etc/pkg/repos/
+    state: directory
+  tags:
+  - pkg
+
+- name: set correct pkg overrides
+  template:
+    src: FreeBSD.conf.pkg
+    dest: /usr/local/etc/pkg/repos/FreeBSD.conf
+  tags:
+  - pkg
+
+- name: ensure user database is in sync
+  command: /usr/sbin/pwd_mkdb -p /etc/master.passwd
+  tags:
+  - users
+  - passwd

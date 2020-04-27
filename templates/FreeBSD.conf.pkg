@@ -1,0 +1,3 @@
+FreeBSD: {
+    url: "pkg+http://pkg.FreeBSD.org/${ABI}/{{ freebsd_pkg_branch | default('latest') }}"
+}

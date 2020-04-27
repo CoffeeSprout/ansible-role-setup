@@ -1,0 +1,26 @@
+---
+# defaults file for coffeesprout.setup
+packages: []
+
+server_hostname: "{{ inventory_hostname }}"
+
+rc_changes:
+  - name: hostname
+    value: "{{ server_hostname }}"
+
+network_devices: []
+
+sysctls: []
+
+redhat_disabled_modules:
+- cramfs
+- freevxfs
+- jffs2
+- hfs
+- hfsplus
+- squashfs
+- udf
+- dccp
+- sctp
+- rds
+- tipc

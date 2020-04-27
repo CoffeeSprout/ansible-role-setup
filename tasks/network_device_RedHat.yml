@@ -1,0 +1,31 @@
+---
+
+- name: setup network device
+  lineinfile:
+    dest: "/etc/sysconfig/network-scripts/ifcfg-{{ network_device.device }}"
+    line: "{{ item.name }}={{ item.value }}"
+    regex: "^{{ item.name }}"
+  with_items:
+  - name: "TYPE"
+    value: "Ethernet"
+  - name: "BOOTPROTO"
+    value: "static"
+  - name: "IPV4_FAILURE_FATAL"
+    value: "no"
+  - name: "NETMASK"
+    value: "{{ network_device.netmask | default('255.255.255.0') }}"
+  - name: "IPADDR"
+    value: "{{ network_device.ip }}"
+  - name: "NAME"
+    value: "{{ network_device.device }}"
+  - name: "DEVICE"
+    value: "{{ network_device.device }}"
+  - name: "ONBOOT"
+    value: "{{ network_device.onboot | default('yes') }}"
+  tags:
+  - networking
+
+- name: enable network device
+  command: "ifup {{ network_device.device }}"
+  tags:
+  - networking

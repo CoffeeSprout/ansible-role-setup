@@ -1,0 +1,27 @@
+galaxy_info:
+  author: Barry van Someren
+  description: Basic os level setup (Packages, sysctls and network devices)
+  company: CoffeeSprout ICT Services
+
+  # If the issue tracker for your role is not on github, uncomment the
+  # next line and provide a value
+  # issue_tracker_url: http://example.com/issue/tracker
+
+  license: BSD
+
+  min_ansible_version: 2.8
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+    - 8
+  - name: FreeBSD
+    versions:
+    - all
+
+  galaxy_tags:
+  - freebsd
+  - centos
+
+dependencies: []

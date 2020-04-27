@@ -1,0 +1,33 @@
+---
+# tasks file for coffeesprout.setup
+
+- name: ensure OS specifics are included
+  include_vars: "{{ item }}"
+  with_first_found:
+  - "{{ ansible_os_family }}.yml"
+
+- name: include correct OS
+  include_tasks: "main-{{ ansible_os_family }}.yml"
+  tags:
+  - always
+
+- name: setup packages
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+  - "{{ packages }}"
+  - "{{ default_packages }}"
+  tags:
+  - packages
+
+- name: set sysctls
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    reload: True
+  with_items:
+  - "{{ default_sysctls }}"
+  - "{{ sysctls }}"
+  tags:
+  - sysctl
