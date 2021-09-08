@@ -5,6 +5,7 @@
     dest: "/etc/sysconfig/network-scripts/ifcfg-{{ network_device.device }}"
     line: "{{ item.name }}={{ item.value }}"
     regex: "^{{ item.name }}"
+    create: True
   with_items:
   - name: "TYPE"
     value: "Ethernet"

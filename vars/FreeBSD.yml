@@ -2,7 +2,7 @@ default_packages:
 - bash
 - curl
 - sudo
-- vim-console
+- vim
 
 default_sysctls:
 - name: security.bsd.see_other_uids
