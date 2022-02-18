@@ -45,21 +45,21 @@
   tags:
   - limits
 
-- name: Prevent Log In to Accounts With Empty Password - system-auth
-  replace:
-    dest: /etc/pam.d/system-auth
-    follow: true
-    regexp: nullok
-  tags:
-    - no_empty_passwords
+#- name: Prevent Log In to Accounts With Empty Password - system-auth
+#  replace:
+#    dest: /etc/pam.d/system-auth
+#    follow: true
+#    regexp: nullok
+#  tags:
+#    - no_empty_passwords
 
-- name: Prevent Log In to Accounts With Empty Password - password-auth
-  replace:
-    dest: /etc/pam.d/password-auth
-    follow: true
-    regexp: nullok
-  tags:
-    - no_empty_passwords
+#- name: Prevent Log In to Accounts With Empty Password - password-auth
+#  replace:
+#    dest: /etc/pam.d/password-auth
+#    follow: true
+#    regexp: nullok
+#  tags:
+#    - no_empty_passwords
 
 - name: setup psacct to monitor user activity
   package:
