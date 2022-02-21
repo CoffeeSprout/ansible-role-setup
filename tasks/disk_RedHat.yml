@@ -1,0 +1,15 @@
+---
+
+- debug:
+    msg: "Creating {{ partition.mount_point }} on {{ partition.disk }} of type {{ partition.type }}"
+ 
+- name: create filesystem
+  filesystem:
+    fstype: "{{ partition.type }}"
+    dev: "{{ partition.disk }}"
+- name: mount filesystem
+  mount:
+    path: "{{ partition.mount_point }}"
+    src: "{{ partition.disk }}"
+    fstype: "{{ partition.type }}"
+    state: mounted
