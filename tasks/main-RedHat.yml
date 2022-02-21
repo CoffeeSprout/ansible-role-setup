@@ -23,6 +23,14 @@
   tags:
   - networking
 
+- name: setup partitions
+  include_tasks: disk_RedHat.yml
+  with_items: "{{ partitions }}"
+  loop_control:
+    loop_var: partition
+  tags:
+  - partitions
+
 - name: block network protocols and filesystems in modprobe
   modprobe:
     name: "{{ item }}"
