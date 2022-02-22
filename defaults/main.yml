@@ -12,6 +12,8 @@ network_devices: []
 
 sysctls: []
 
+partitions: []
+
 redhat_disabled_modules:
 - cramfs
 - freevxfs
