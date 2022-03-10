@@ -4,3 +4,5 @@ default_packages:
 default_sysctls:
 - name: fs.suid_dumpable
   value: 0
+
+partitions: []
