@@ -17,6 +17,9 @@ This role can be used in a ansible-pull style playbook to ensure base system sta
 Dependencies
 ------------
 
+This role requires the community.general collection
+
+To install it, use: ansible-galaxy collection install community.general
 
 Example Playbook
 ----------------
