@@ -86,6 +86,7 @@
   tags:
   - monitoring
   - psacct
+  ignore_errors: true
 
 - name: accton to collect user activity
   command: accton on
